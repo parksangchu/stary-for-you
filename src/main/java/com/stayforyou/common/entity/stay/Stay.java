@@ -1,7 +1,7 @@
 package com.stayforyou.common.entity.stay;
 
 import com.stayforyou.common.entity.BaseModel;
-import com.stayforyou.common.entity.Member;
+import com.stayforyou.common.entity.member.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

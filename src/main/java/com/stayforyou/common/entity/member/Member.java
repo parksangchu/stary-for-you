@@ -1,5 +1,6 @@
-package com.stayforyou.common.entity;
+package com.stayforyou.common.entity.member;
 
+import com.stayforyou.common.entity.BaseModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
