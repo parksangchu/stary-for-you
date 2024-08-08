@@ -1,4 +1,4 @@
-package com.stayforyou.common.entity.stay;
+package com.stayforyou.core.entity.stay;
 
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;

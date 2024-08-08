@@ -1,8 +1,7 @@
-package com.stayforyou.common.entity.stay;
+package com.stayforyou.core.entity.stay;
 
-import com.stayforyou.common.entity.BaseModel;
+import com.stayforyou.core.entity.BaseModel;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -11,21 +10,26 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Amenity extends BaseModel {
+@Getter
+public class Image extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stay_id")
     private Stay stay;
 
-    @Enumerated
-    private AmenityType amenityType;
+    private String originalName;
+
+    private String storeName;
+
+    private String url;
 
     @Builder
-    public Amenity(Stay stay, AmenityType amenityType) {
+    public Image(Stay stay, String originalName, String storeName, String url) {
         this.stay = stay;
-        this.amenityType = amenityType;
+        this.originalName = originalName;
+        this.storeName = storeName;
+        this.url = url;
     }
 }

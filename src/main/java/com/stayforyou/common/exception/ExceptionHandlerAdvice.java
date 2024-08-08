@@ -1,6 +1,5 @@
 package com.stayforyou.common.exception;
 
-import com.stayforyou.common.dto.ErrorResult;
 import java.util.Objects;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

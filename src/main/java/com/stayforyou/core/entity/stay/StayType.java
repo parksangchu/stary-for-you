@@ -1,4 +1,4 @@
-package com.stayforyou.common.entity.stay;
+package com.stayforyou.core.entity.stay;
 
 public enum StayType {
     APARTMENT,

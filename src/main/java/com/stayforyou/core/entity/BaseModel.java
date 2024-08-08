@@ -1,4 +1,4 @@
-package com.stayforyou.common.entity;
+package com.stayforyou.core.entity;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;

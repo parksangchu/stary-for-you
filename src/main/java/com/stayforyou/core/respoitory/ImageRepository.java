@@ -1,6 +1,6 @@
-package com.stayforyou.common.respoitory;
+package com.stayforyou.core.respoitory;
 
-import com.stayforyou.common.entity.stay.Image;
+import com.stayforyou.core.entity.stay.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ImageRepository extends JpaRepository<Image, Long> {

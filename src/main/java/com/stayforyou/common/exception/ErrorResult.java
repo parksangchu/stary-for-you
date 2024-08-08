@@ -1,4 +1,4 @@
-package com.stayforyou.common.dto;
+package com.stayforyou.common.exception;
 
 import lombok.Builder;
 import lombok.Getter;
