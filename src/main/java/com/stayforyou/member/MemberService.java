@@ -43,6 +43,11 @@ public class MemberService {
         return member;
     }
 
+    @Transactional(readOnly = true)
+    public Member findByName(String name) {
+        return memberRepository.findByNameOrThrow(name);
+    }
+
     private void validateDuplicateEmail(String email) {
         if (memberRepository.existsByEmail(email)) {
             throw new BadRequestException("이미 존재하는 이메일입니다.");
