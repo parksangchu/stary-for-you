@@ -2,6 +2,7 @@ package com.stayforyou.member;
 
 import static com.stayforyou.core.entity.member.Role.ROLE_USER;
 
+import com.stayforyou.common.exception.BadRequestException;
 import com.stayforyou.core.entity.member.Member;
 import com.stayforyou.core.respoitory.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,9 @@ public class MemberService {
 
     public Member register(String email, String password, String name, String phone) {
 
+        validateDuplicateEmail(email);
+        validateDuplicateName(name);
+
         String encodedPassword = passwordEncoder.encode(password);
 
         Member member = Member.builder()
@@ -37,5 +41,17 @@ public class MemberService {
         log.info("새로운 유저가 회원가입하였습니다. id = {}", member.getId());
 
         return member;
+    }
+
+    private void validateDuplicateEmail(String email) {
+        if (memberRepository.existsByEmail(email)) {
+            throw new BadRequestException("이미 존재하는 이메일입니다.");
+        }
+    }
+
+    private void validateDuplicateName(String name) {
+        if (memberRepository.existsByName(name)) {
+            throw new BadRequestException("이미 존재하는 이름입니다.");
+        }
     }
 }
