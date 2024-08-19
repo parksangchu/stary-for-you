@@ -1,6 +1,7 @@
 package com.stayforyou.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.stayforyou.auth.filter.JwtFilter;
 import com.stayforyou.auth.filter.LoginFilter;
 import com.stayforyou.auth.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -45,8 +46,8 @@ public class SecurityConfig {
 
         http
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, objectMapper,
-                                "/api/auth"),
-                        UsernamePasswordAuthenticationFilter.class);
+                        "/api/auth"), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new JwtFilter(jwtUtil), LoginFilter.class);
 
         http
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
