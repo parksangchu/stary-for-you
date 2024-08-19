@@ -1,7 +1,9 @@
-package com.stayforyou.auth;
+package com.stayforyou.auth.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.stayforyou.auth.dto.LoginTryRequest;
+import com.stayforyou.auth.util.JwtUtil;
 import com.stayforyou.common.exception.ErrorResult;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;

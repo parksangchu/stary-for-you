@@ -1,8 +1,8 @@
 package com.stayforyou.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.stayforyou.auth.JwtUtil;
-import com.stayforyou.auth.LoginFilter;
+import com.stayforyou.auth.filter.LoginFilter;
+import com.stayforyou.auth.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

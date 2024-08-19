@@ -1,4 +1,4 @@
-package com.stayforyou.auth;
+package com.stayforyou.auth.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

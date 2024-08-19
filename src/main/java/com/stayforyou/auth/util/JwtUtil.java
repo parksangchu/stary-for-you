@@ -1,4 +1,4 @@
-package com.stayforyou.auth;
+package com.stayforyou.auth.util;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

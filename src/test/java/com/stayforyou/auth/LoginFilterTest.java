@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.stayforyou.auth.dto.LoginTryRequest;
 import com.stayforyou.core.entity.member.Member;
 import com.stayforyou.core.entity.member.Role;
 import com.stayforyou.core.respoitory.MemberRepository;

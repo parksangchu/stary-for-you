@@ -1,5 +1,7 @@
-package com.stayforyou.auth;
+package com.stayforyou.auth.service;
 
+import com.stayforyou.auth.dto.CustomUserDetails;
+import com.stayforyou.auth.dto.LoginUser;
 import com.stayforyou.core.entity.member.Member;
 import com.stayforyou.core.respoitory.MemberRepository;
 import lombok.RequiredArgsConstructor;

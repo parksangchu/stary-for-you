@@ -1,4 +1,4 @@
-package com.stayforyou.auth;
+package com.stayforyou.auth.dto;
 
 import com.stayforyou.core.entity.member.Member;
 import lombok.Builder;
