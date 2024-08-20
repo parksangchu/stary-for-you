@@ -47,7 +47,7 @@ public class SecurityConfig {
         http
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, objectMapper,
                         "/api/auth"), UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(new JwtFilter(jwtUtil), LoginFilter.class);
+                .addFilterAfter(new JwtFilter(jwtUtil, objectMapper), LoginFilter.class);
 
         http
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

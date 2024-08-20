@@ -1,16 +1,15 @@
 package com.stayforyou.auth.filter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stayforyou.auth.dto.LoginTryRequest;
 import com.stayforyou.auth.util.JwtUtil;
-import com.stayforyou.common.exception.ErrorResult;
+import com.stayforyou.common.exception.ErrorResultUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -64,14 +63,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException {
 
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setCharacterEncoding("UTF-8");
-
-        String content = makeErrorContent();
-
-        response.getWriter()
-                .write(content);
+        ErrorResultUtil.sendErrorResponse(response, HttpStatus.UNAUTHORIZED, "아이디나 비밀번호가 일치하지 않습니다.", objectMapper);
     }
 
     private LoginTryRequest getLoginTryRequest(HttpServletRequest request) {
@@ -89,12 +81,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                 .findFirst()
                 .orElse(null);
     }
-
-    private String makeErrorContent() throws JsonProcessingException {
-        ErrorResult errorResult = ErrorResult.builder()
-                .message("아이디나 비밀번호가 일치하지 않습니다.")
-                .build();
-
-        return objectMapper.writeValueAsString(errorResult);
-    }
+//
+//    private String makeErrorContent() throws JsonProcessingException {
+//        ErrorResult errorResult = ErrorResult.builder()
+//                .message("아이디나 비밀번호가 일치하지 않습니다.")
+//                .build();
+//
+//        return objectMapper.writeValueAsString(errorResult);
+//    }
 }
