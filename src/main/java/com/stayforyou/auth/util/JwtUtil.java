@@ -14,12 +14,12 @@ public class JwtUtil {
     private static final String ROLE_KEY = "role";
 
     private final SecretKey accessKey;
+    private final Long expiration;
 
-    @Value("${spring.jwt.expiration}")
-    private Long expiration;
-
-    public JwtUtil(@Value("${spring.jwt.secret}") String accessKeyValue) {
+    public JwtUtil(@Value("${spring.jwt.secret}") String accessKeyValue,
+                   @Value("${spring.jwt.expiration}") Long expiration) {
         this.accessKey = Keys.hmacShaKeyFor(accessKeyValue.getBytes(StandardCharsets.UTF_8));
+        this.expiration = expiration;
     }
 
 
