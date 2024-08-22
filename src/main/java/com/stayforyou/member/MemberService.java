@@ -40,8 +40,8 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public Member findByName(String name) {
-        return memberRepository.findByNameOrThrow(name);
+    public Member findByUsername(String username) {
+        return memberRepository.findByEmailOrThrow(username);
     }
 
     private void validateDuplicateEmail(String email) {

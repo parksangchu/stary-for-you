@@ -40,10 +40,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         LoginTryRequest loginTryRequest = getLoginTryRequest(request);
 
-        String email = loginTryRequest.getEmail();
+        String username = loginTryRequest.getUsername();
         String password = loginTryRequest.getPassword();
 
-        UsernamePasswordAuthenticationToken authTryToken = new UsernamePasswordAuthenticationToken(email, password);
+        UsernamePasswordAuthenticationToken authTryToken = new UsernamePasswordAuthenticationToken(username, password);
 
         return authenticationManager.authenticate(authTryToken);
     }
@@ -63,7 +63,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException {
 
-        ErrorResultUtil.sendErrorResponse(response, HttpStatus.UNAUTHORIZED, "아이디나 비밀번호가 일치하지 않습니다.", objectMapper);
+        ErrorResultUtil.sendErrorResponse(response, HttpStatus.UNAUTHORIZED, "이메일 혹은 비밀번호가 일치하지 않습니다.", objectMapper);
     }
 
     private LoginTryRequest getLoginTryRequest(HttpServletRequest request) {

@@ -37,7 +37,7 @@ public class MemberController {
     @Operation(summary = "본인 정보 조회")
     @GetMapping("/me")
     public MemberDetailResponse getMyProfile(@AuthenticationPrincipal UserDetails userDetails) {
-        Member member = memberService.findByName(userDetails.getUsername());
+        Member member = memberService.findByUsername(userDetails.getUsername());
 
         return MemberDetailResponse.from(member);
     }

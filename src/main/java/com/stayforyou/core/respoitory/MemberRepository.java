@@ -11,13 +11,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
         return findByEmail(email).orElseThrow(() -> new NotFoundException("사용자 이메일과 일치하는 멤버 정보가 존재하지 않습니다."));
     }
 
-    default Member findByNameOrThrow(String name) {
-        return findByName(name).orElseThrow(() -> new NotFoundException("사용자 이름과 일치하는 멤버 정보가 존재하지 않습니다."));
-    }
-
     Optional<Member> findByEmail(String email);
-    
-    Optional<Member> findByName(String name);
 
     boolean existsByEmail(String email);
 
