@@ -26,9 +26,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 class LoginFilterTest {
 
-    private static final String TEST_EMAIL = "test@email.com";
-    public static final String TEST_PASSWORD = "test123";
-    public static final String LOGIN_ERROR = "아이디나 비밀번호가 일치하지 않습니다.";
+    private static final String TEST_USERNAME = "test";
+    private static final String TEST_PASSWORD = "test123";
+    private static final String LOGIN_ERROR = "사용자 이름 혹은 비밀번호가 일치하지 않습니다.";
 
     @Autowired
     MockMvc mockMvc;
@@ -44,16 +44,16 @@ class LoginFilterTest {
 
     @BeforeEach
     void setUp() {
-        Member member = new Member(TEST_EMAIL, passwordEncoder.encode(TEST_PASSWORD), "test", "111-1111-1111",
+        Member member = new Member(TEST_USERNAME, passwordEncoder.encode(TEST_PASSWORD), "test@mail.com", "nick",
                 Role.ROLE_USER);
 
         memberRepository.save(member);
     }
 
     @Test
-    @DisplayName("이메일와 비밀번호가 모두 일치하면 accessToken을 발급하여 Authorization 헤더의 값으로 전달한다.")
+    @DisplayName("사용자 이름과 비밀번호가 모두 일치하면 accessToken을 발급하여 Authorization 헤더의 값으로 전달한다.")
     void attemptAuthentication_success() throws Exception {
-        String json = objectMapper.writeValueAsString(new LoginTryRequest(TEST_EMAIL, TEST_PASSWORD));
+        String json = objectMapper.writeValueAsString(new LoginTryRequest(TEST_USERNAME, TEST_PASSWORD));
 
         mockMvc.perform(post("/api/auth")
                         .content(json))
@@ -64,7 +64,7 @@ class LoginFilterTest {
     @Test
     @DisplayName("잘못된 비밀번호를 입력하면 401예외가 발생한다.")
     void attemptAuthentication_wrongPassword() throws Exception {
-        String json = objectMapper.writeValueAsString(new LoginTryRequest(TEST_EMAIL, "wrongpassword"));
+        String json = objectMapper.writeValueAsString(new LoginTryRequest(TEST_USERNAME, "wrongpassword"));
 
         mockMvc.perform(post("/api/auth")
                         .content(json))
@@ -74,9 +74,9 @@ class LoginFilterTest {
     }
 
     @Test
-    @DisplayName("존재하지 않는 이메일을 입력하면 401예외가 발생한다.")
+    @DisplayName("존재하지 않는 사용자 이름을 입력하면 401예외가 발생한다.")
     void attemptAuthentication_nonExistentUser() throws Exception {
-        String json = objectMapper.writeValueAsString(new LoginTryRequest("nonexistent@email.com", TEST_PASSWORD));
+        String json = objectMapper.writeValueAsString(new LoginTryRequest("non_exist", TEST_PASSWORD));
 
         mockMvc.perform(post("/api/auth")
                         .content(json))

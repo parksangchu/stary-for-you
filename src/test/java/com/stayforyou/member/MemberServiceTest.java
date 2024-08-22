@@ -7,8 +7,10 @@ import com.stayforyou.core.entity.member.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
+@Transactional
 class MemberServiceTest {
 
     @Autowired
@@ -16,12 +18,12 @@ class MemberServiceTest {
 
     @Test
     void register() {
-        String email = "test@email.com";
+        String username = "test";
         String password = "1234";
-        String name = "test";
-        String phone = "111-1111-1111";
+        String email = "test@email.com";
+        String nickname = "testnick";
 
-        Member member = memberService.register(email, password, name, phone);
+        Member member = memberService.register(username, password, email, nickname);
 
         assertThat(member.getId()).isNotNull();
         assertThat(member.getRole()).isEqualTo(ROLE_USER);

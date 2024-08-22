@@ -13,20 +13,20 @@ public class MemberDetailResponse {
 
     private final Long id;
 
+    private final String username;
+
     private final String email;
 
-    private final String name;
-
-    private final String phone;
+    private final String nickname;
 
     private final Role role;
-    
+
     public static MemberDetailResponse from(Member member) {
         return MemberDetailResponse.builder()
                 .id(member.getId())
+                .username(member.getUsername())
                 .email(member.getEmail())
-                .name(member.getName())
-                .phone(member.getPhone())
+                .nickname(member.getNickname())
                 .role(member.getRole())
                 .build();
     }

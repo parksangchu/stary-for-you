@@ -28,8 +28,8 @@ public class MemberController {
     @PostMapping
     public MemberCreateResponse createMember(@Valid @RequestBody MemberCreateRequest request) {
 
-        Member member = memberService.register(request.getEmail(), request.getPassword(), request.getName(),
-                request.getPhone());
+        Member member = memberService.register(request.getUsername(), request.getPassword(), request.getEmail(),
+                request.getNickname());
 
         return MemberCreateResponse.from(member);
     }

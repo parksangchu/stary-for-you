@@ -16,24 +16,24 @@ import lombok.NoArgsConstructor;
 public class Member extends BaseModel {
 
     @Column(unique = true)
-    private String email;
+    private String username;
 
     private String password;
 
-    @Column(unique = true)
-    private String name;
+    private String email;
 
-    private String phone;
+    @Column(unique = true)
+    private String nickname;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder
-    public Member(String email, String password, String name, String phone, Role role) {
-        this.email = email;
+    public Member(String username, String password, String email, String nickname, Role role) {
+        this.username = username;
         this.password = password;
-        this.name = name;
-        this.phone = phone;
+        this.email = email;
+        this.nickname = nickname;
         this.role = role;
     }
 }
