@@ -6,14 +6,12 @@ import com.stayforyou.common.exception.BadRequestException;
 import com.stayforyou.core.entity.member.Member;
 import com.stayforyou.core.respoitory.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 @Transactional
 public class MemberService {
 
@@ -37,8 +35,6 @@ public class MemberService {
                 .build();
 
         memberRepository.save(member);
-
-        log.info("새로운 유저가 회원가입하였습니다. id = {}", member.getId());
 
         return member;
     }

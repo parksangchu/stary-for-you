@@ -81,12 +81,4 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                 .findFirst()
                 .orElse(null);
     }
-//
-//    private String makeErrorContent() throws JsonProcessingException {
-//        ErrorResult errorResult = ErrorResult.builder()
-//                .message("아이디나 비밀번호가 일치하지 않습니다.")
-//                .build();
-//
-//        return objectMapper.writeValueAsString(errorResult);
-//    }
 }
