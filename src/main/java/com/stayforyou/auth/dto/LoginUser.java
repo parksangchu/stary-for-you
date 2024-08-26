@@ -18,7 +18,7 @@ public class LoginUser {
 
     public static LoginUser from(Member member) {
         return LoginUser.builder()
-                .username(member.getUsername())
+                .username(member.getEmail())
                 .password(member.getPassword())
                 .role(member.getRole().name())
                 .build();

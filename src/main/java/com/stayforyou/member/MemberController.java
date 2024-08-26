@@ -28,8 +28,7 @@ public class MemberController {
     @PostMapping
     public MemberCreateResponse createMember(@Valid @RequestBody MemberCreateRequest request) {
 
-        Member member = memberService.register(request.getUsername(), request.getPassword(), request.getEmail(),
-                request.getNickname());
+        Member member = memberService.register(request.getEmail(), request.getPassword(), request.getNickname());
 
         return MemberCreateResponse.from(member);
     }
@@ -37,7 +36,7 @@ public class MemberController {
     @Operation(summary = "본인 정보 조회")
     @GetMapping("/me")
     public MemberDetailResponse getMyProfile(@AuthenticationPrincipal UserDetails userDetails) {
-        Member member = memberService.findByUsername(userDetails.getUsername());
+        Member member = memberService.findByEmailOrThrow(userDetails.getUsername());
 
         return MemberDetailResponse.from(member);
     }

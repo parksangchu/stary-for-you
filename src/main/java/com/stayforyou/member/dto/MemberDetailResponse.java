@@ -13,8 +13,6 @@ public class MemberDetailResponse {
 
     private final Long id;
 
-    private final String username;
-
     private final String email;
 
     private final String nickname;
@@ -24,7 +22,6 @@ public class MemberDetailResponse {
     public static MemberDetailResponse from(Member member) {
         return MemberDetailResponse.builder()
                 .id(member.getId())
-                .username(member.getUsername())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
                 .role(member.getRole())

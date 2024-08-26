@@ -18,12 +18,11 @@ class MemberServiceTest {
 
     @Test
     void register() {
-        String username = "test";
-        String password = "1234";
         String email = "test@email.com";
+        String password = "1234";
         String nickname = "testnick";
 
-        Member member = memberService.register(username, password, email, nickname);
+        Member member = memberService.register(email, password, nickname);
 
         assertThat(member.getId()).isNotNull();
         assertThat(member.getRole()).isEqualTo(ROLE_USER);

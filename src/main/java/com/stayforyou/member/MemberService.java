@@ -19,17 +19,15 @@ public class MemberService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public Member register(String username, String password, String email, String nickname) {
+    public Member register(String email, String password, String nickname) {
 
-        validateDuplicateUsername(username);
-        validateDuplicateNickname(nickname);
+        validateDuplicateEmail(email);
 
         String encodedPassword = passwordEncoder.encode(password);
 
         Member member = Member.builder()
-                .username(username)
-                .password(encodedPassword)
                 .email(email)
+                .password(encodedPassword)
                 .nickname(nickname)
                 .role(ROLE_USER)
                 .build();
@@ -40,19 +38,13 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public Member findByUsername(String username) {
-        return memberRepository.findByUsernameOrThrow(username);
+    public Member findByEmailOrThrow(String email) {
+        return memberRepository.findByEmailOrThrow(email);
     }
 
-    private void validateDuplicateUsername(String username) {
-        if (memberRepository.existsByUsername(username)) {
-            throw new BadRequestException("이미 존재하는 사용자 이름입니다.");
-        }
-    }
-
-    private void validateDuplicateNickname(String nickname) {
-        if (memberRepository.existsByNickname(nickname)) {
-            throw new BadRequestException("이미 존재하는 닉네임입니다.");
+    private void validateDuplicateEmail(String email) {
+        if (memberRepository.existsByEmail(email)) {
+            throw new BadRequestException("이미 사용중인 이메일입니다.");
         }
     }
 }

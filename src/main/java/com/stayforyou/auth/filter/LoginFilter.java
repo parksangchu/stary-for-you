@@ -1,6 +1,7 @@
 package com.stayforyou.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.stayforyou.auth.dto.CustomUserDetails;
 import com.stayforyou.auth.dto.LoginTryRequest;
 import com.stayforyou.auth.util.JwtUtil;
 import com.stayforyou.common.exception.ErrorResultUtil;
@@ -14,7 +15,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
@@ -37,7 +37,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
-
+        
         LoginTryRequest loginTryRequest = getLoginTryRequest(request);
 
         String username = loginTryRequest.getUsername();
@@ -52,8 +52,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) {
 
-        String username = authResult.getName();
-        String role = getRole(authResult);
+        CustomUserDetails customUserDetails = (CustomUserDetails) authResult.getPrincipal();
+
+        String username = customUserDetails.getUsername();
+        String role = customUserDetails.getRole();
 
         String accessToken = jWtUtil.generateToken(username, role);
         response.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
@@ -73,13 +75,5 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private String getRole(Authentication authResult) {
-        return authResult.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .findFirst()
-                .orElse(null);
     }
 }
