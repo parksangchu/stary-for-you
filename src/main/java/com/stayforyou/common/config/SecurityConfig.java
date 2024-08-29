@@ -19,6 +19,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -52,13 +53,16 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth").permitAll()
+                        .requestMatchers("/api/auth", "/health").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/members").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/**").permitAll()
-                        .anyRequest().authenticated());
+                        .anyRequest().authenticated())
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(getAuthenticationEntryPoint()));
 
         http
                 .oauth2Login(oauth2 -> oauth2
+
                         .userInfoEndpoint(
                                 userInfoEndpointConfig -> userInfoEndpointConfig
                                         .userService(customOAuth2UserService))
@@ -74,6 +78,17 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
     private CorsConfigurationSource getCorsConfigurationSource() {
         return request -> {
 
@@ -86,21 +101,14 @@ public class SecurityConfig {
             configuration.setAllowedMethods(List.of("*"));
             configuration.setAllowCredentials(true);
             configuration.setAllowedHeaders(List.of("*"));
-            
+
             configuration.setExposedHeaders(List.of("Authorization"));
 
             return configuration;
         };
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    private AuthenticationEntryPoint getAuthenticationEntryPoint() {
+        return (request, response, authException) -> response.sendError(403);
     }
 }
